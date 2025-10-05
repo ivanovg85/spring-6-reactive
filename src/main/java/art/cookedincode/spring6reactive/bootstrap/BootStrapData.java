@@ -1,9 +1,12 @@
 package art.cookedincode.spring6reactive.bootstrap;
 
 import art.cookedincode.spring6reactive.domain.Beer;
+import art.cookedincode.spring6reactive.domain.Customer;
 import art.cookedincode.spring6reactive.repositories.BeerRepository;
+import art.cookedincode.spring6reactive.repositories.CustomerRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -18,10 +21,38 @@ import java.util.Arrays;
 public class BootStrapData implements CommandLineRunner {
 
     private final BeerRepository beerRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
         loadBeerData();
+        loadCustomerData();
+    }
+
+    private void loadCustomerData() {
+        customerRepository.count().subscribe(count -> {
+            if (count == 0 ) {
+                Customer michaelWeston = Customer.builder()
+                        .name("Michael Weston")
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .build();
+
+                Customer fionaGlennane = Customer.builder()
+                        .name("Fiona Glennane")
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .build();
+
+                Customer samAxe = Customer.builder()
+                        .name("Sam Axe")
+                        .createdDate(LocalDateTime.now())
+                        .lastModifiedDate(LocalDateTime.now())
+                        .build();
+
+                customerRepository.saveAll(Arrays.asList(michaelWeston, fionaGlennane, samAxe)).subscribe();
+            }
+        });
     }
 
     private void loadBeerData() {

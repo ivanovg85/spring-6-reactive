@@ -1,7 +1,5 @@
-package art.cookedincode.spring6reactive.model;
+package art.cookedincode.spring6reactive.domain;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -20,20 +18,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class BeerDTO {
+public class Customer {
+
+    @Id
     private Integer id;
+    private String name;
 
-    @NotBlank
-    @Size(min = 3, max = 255)
-    private String beerName;
-
-    @Size(min = 1, max = 255)
-    private String beerStyle;
-
-    @Size(max = 25)
-    private String upc;
-    private Integer quantityOnHand;
-    private BigDecimal price;
+    @CreatedDate
     private LocalDateTime createdDate;
+
+    @LastModifiedDate
     private LocalDateTime lastModifiedDate;
 }
