@@ -11,8 +11,6 @@ import org.springframework.context.annotation.Import;
 
 import java.math.BigDecimal;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 /**
  * Created by Georgi Ivanov
  */
