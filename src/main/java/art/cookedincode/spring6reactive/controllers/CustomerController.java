@@ -17,8 +17,8 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 public class CustomerController {
 
-    private static final String CUSTOMER_PATH = "/api/v2/customer";
-    private static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
+    public static final String CUSTOMER_PATH = "/api/v2/customer";
+    public static final String CUSTOMER_PATH_ID = CUSTOMER_PATH + "/{customerId}";
 
     private final CustomerService customerService;
 
@@ -32,12 +32,12 @@ public class CustomerController {
 
     @PutMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> updateCustomer(@PathVariable Integer customerId, @RequestBody @Validated CustomerDTO customerDTO) {
-        return customerService.updateCustomer(customerId, customerDTO).map(_ -> ResponseEntity.ok().build());
+        return customerService.updateCustomer(customerId, customerDTO).map(_ -> ResponseEntity.noContent().build());
     }
 
     @PatchMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> patchCustomer(@PathVariable Integer customerId, @RequestBody @Validated CustomerDTO customerDTO) {
-        return customerService.patchCustomer(customerId, customerDTO).map(_ -> ResponseEntity.ok().build());
+        return customerService.patchCustomer(customerId, customerDTO).map(_ -> ResponseEntity.noContent().build());
     }
 
     @GetMapping(CUSTOMER_PATH_ID)
@@ -52,6 +52,6 @@ public class CustomerController {
 
     @DeleteMapping(CUSTOMER_PATH_ID)
     Mono<ResponseEntity<Void>> deleteCustomerById(@PathVariable Integer customerId) {
-        return customerService.deleteCustomerById(customerId).map(_ -> ResponseEntity.noContent().build());
+        return customerService.deleteCustomerById(customerId).thenReturn(ResponseEntity.noContent().build());
     }
 }
